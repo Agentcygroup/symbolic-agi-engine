@@ -1,0 +1,36 @@
+name: Pre-Staging with W&B
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+jobs:
+  deploy-staging:
+    if: github.event.action == 'opened' || github.event.action == 'reopened'
+    runs-on: ubuntu-latest
+    env:
+      WANDB_API_KEY: 6a7187e228bc7692f28e3f50e6fea56ca92babd8
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install wandb
+
+      - name: Log into Weights & Biases
+        run: wandb login $WANDB_API_KEY
+
+      - name: Deploy staging environment
+        run: ./deploy.sh staging-${{ github.event.pull_request.number }}
+
+  destroy-staging:
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Destroy staging environment
+        run: ./destroy.sh staging-${{ github.event.pull_request.number }}
