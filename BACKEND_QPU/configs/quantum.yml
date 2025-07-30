@@ -1,0 +1,11 @@
+name: totality_qpu_env
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - qiskit
+  - qiskit-aer
+  - pip:
+      - numpy
+      - sympy
