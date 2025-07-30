@@ -1,0 +1,3 @@
+[submodule "AUTOMATA_COMBINATOR/runtime_nodes/ros2"]
+	path = AUTOMATA_COMBINATOR/runtime_nodes/ros2
+	url = ./AUTOMATA_COMBINATOR/runtime_nodes/ros2
